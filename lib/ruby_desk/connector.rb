@@ -92,14 +92,15 @@ module RubyDesk
       RubyDesk.logger.info "method: #{api_call[:method]}"
       RubyDesk.logger.info "Params: #{data}"
 
-      case api_call[:method]
+      resp, data = case api_call[:method]
         when :get, 'get' then
-          resp, data = http.request(Net::HTTP::Get.new(url.path+"?"+data, headers))
+          http.request(Net::HTTP::Get.new(url.path+"?"+data, headers))
         when :post, 'post' then
-          resp, data = http.request(Net::HTTP::Post.new(url.path, headers), data)
+          http.request(Net::HTTP::Post.new(url.path, headers), data)
         when :delete, 'delete' then
-          resp, data = http.request(Net::HTTP::Delete.new(url.path, headers), data)
+          http.request(Net::HTTP::Delete.new(url.path, headers), data)
       end
+      data = resp.read_body if data.nil? && RUBY_VERSION.include?('1.9')
 
       RubyDesk.logger.info "Response code: #{resp.code}"
       RubyDesk.logger.info "Returned data: #{data}"
