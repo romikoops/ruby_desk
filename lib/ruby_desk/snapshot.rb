@@ -156,7 +156,7 @@ class RubyDesk::Snapshot < RubyDesk::OdeskEntity
     end
     # Invoke API call
     json = connector.prepare_and_invoke_api_call(
-      "team/v1/workdiaries/#{company_id}/#{user_id}" +
+      "team/v1/snapshots/#{company_id}/#{user_id}" +
       (timestamp_param ? "/#{timestamp_param}" : ""), :method=>:get)
 
     # Generate ruby objects for each snapshot
