@@ -150,9 +150,9 @@ class RubyDesk::Snapshot < RubyDesk::OdeskEntity
   def self.snapshot_details(connector, company_id, user_id, timestamp = nil)
     timestamp_param = case timestamp
       when String then timestamp
-      when Date, Time then timestamp.strftime("%Y%m%d")
-      when Range then [timestamp.first, timestamp.last].map{|t|t.strftime("%Y%m%d")}.join(",")
-      when Array then timestamp.map{|t| t.strftime("%Y%m%d")}.join(";")
+      when Date, Time then timestamp.strftime("%Y%m%dT%H%M%SZ")
+      when Range then [timestamp.first, timestamp.last].map{|t|t.strftime("%Y%m%dT%H%M%SZ")}.join(",")
+      when Array then timestamp.map{|t| t.strftime("%Y%m%dT%H%M%SZ")}.join(";")
     end
     # Invoke API call
     json = connector.prepare_and_invoke_api_call(
